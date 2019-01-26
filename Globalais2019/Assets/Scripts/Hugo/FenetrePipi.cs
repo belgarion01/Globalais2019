@@ -5,8 +5,7 @@ using UnityEngine;
 public class FenetrePipi : MonoBehaviour
 {
     private PlayerController pController;
-
-    public float radius;
+    public Vector2 size;
 
     public bool gizmos = false;
 
@@ -17,7 +16,7 @@ public class FenetrePipi : MonoBehaviour
 
     void Update()
     {
-        if (Physics2D.OverlapCircle(transform.position, radius, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
+        if (Physics2D.OverlapBox(transform.position, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -30,7 +29,7 @@ public class FenetrePipi : MonoBehaviour
     {
         if (gizmos)
         {
-            Gizmos.DrawSphere(transform.position, radius);
+            Gizmos.DrawCube(transform.position, new Vector3(size.x, size.y, 1f));
         }
     }
 }

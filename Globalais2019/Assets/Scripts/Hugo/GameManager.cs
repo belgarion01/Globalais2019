@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private float moneyCount;
     public float moneyGain;
 
-    private float soifLevel;
+    private float soifLevel = 1f;
     public float soifDiminution;
     public float soifGain;
 
-    private float mangerLevel;
+    private float mangerLevel = 1f;
     public float mangerDiminution;
     public float mangerGain;
 
-    private float pipiLevel;
+    private float pipiLevel = 0f;
     public float pipiDiminution;
     public float pipiGain;
 
@@ -55,7 +56,11 @@ public class GameManager : MonoBehaviour
     private bool isColocing = false;
 
     private PlayerController pController;
-    private bool encoreUnAutreFlag = true;
+
+    public enum TypeGameOver { Faim, Boire, Pipi, MamanFausseReponse, ManonFausseReponse, Coloc, MamanTimer, ManonTimer };
+    public bool gameover = false;
+    public TextMeshProUGUI GameOverTexte;
+    public GameObject GameOverPanel;
 
     void Start()
     {
@@ -69,34 +74,54 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            StartCoroutine(Phoning());
-        }
-        if (currPhoneTimer >= 0&&pController.currAction!=PlayerController.Action.isPhoning&&!isColocing)
+        if (!gameover)
         {
-            currPhoneTimer -= Time.deltaTime;
-        }
-        else if (pController.currAction != PlayerController.Action.isPhoning&&currPhoneTimer<0)
-        {
-            //pController.currAction = PlayerController.Action.isPhoning;
-            ResetPhoneTimer();
-            StartCoroutine(Phoning());
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(Phoning());
+            }
+            if (currPhoneTimer >= 0 && pController.currAction != PlayerController.Action.isPhoning && !isColocing)
+            {
+                currPhoneTimer -= Time.deltaTime;
+            }
+            else if (pController.currAction != PlayerController.Action.isPhoning && currPhoneTimer < 0)
+            {
+                //pController.currAction = PlayerController.Action.isPhoning;
+                ResetPhoneTimer();
+                StartCoroutine(Phoning());
+            }
 
-        if (currColocTimer >= 0 && pController.currAction != PlayerController.Action.isPhoning && !isColocing)
-        {
-            currColocTimer -= Time.deltaTime;
-        }
-        else if (currColocTimer < 0) {
-            StartCoroutine(ColocTime());
+            if (currColocTimer >= 0 && pController.currAction != PlayerController.Action.isPhoning && !isColocing)
+            {
+                currColocTimer -= Time.deltaTime;
+            }
+            else if (currColocTimer < 0)
+            {
+                StartCoroutine(ColocTime());
+            }
+
+            if (!pController.hided && isColocing)
+            {
+                GameOver(TypeGameOver.Coloc);
+            }
+
+            if (mangerLevel <= 0) {
+                GameOver(TypeGameOver.Faim);
+            }
+            if (soifLevel <= 0)
+            {
+                GameOver(TypeGameOver.Boire);
+            }
+            if (pipiLevel >= 1)
+            {
+                GameOver(TypeGameOver.Boire);
+            }
         }
     }
 
     IEnumerator Phoning() {
         pController.currAction = PlayerController.Action.isPhoning;
-        //if (flagPhoneDebut)
-        //{
-            panel.SetActive(true);
+        panel.SetActive(true);
             int randQui = Random.Range(1, 3);
             switch (randQui)
             {
@@ -137,7 +162,7 @@ public class GameManager : MonoBehaviour
             {
                 if ((buttonPushedRight == false && lieuPropose != lieuDitMaman) || (buttonPushedRight = true && lieuPropose == lieuDitMaman) && phase1)
                 {
-                    Debug.Log("GameOver");
+                GameOver(TypeGameOver.MamanFausseReponse);
                     Debug.Log(buttonPushedRight);
                     Debug.Log(lieuDitMaman);
                     Debug.Log(lieuPropose);
@@ -147,8 +172,8 @@ public class GameManager : MonoBehaviour
             {
                 if ((buttonPushedRight == false && lieuPropose != lieuDitManon) || (buttonPushedRight = true && lieuPropose == lieuDitManon) && phase1)
                 {
-                    Debug.Log("GameOver");
-                    Debug.Log(buttonPushedRight);
+                GameOver(TypeGameOver.ManonFausseReponse);
+                Debug.Log(buttonPushedRight);
                     Debug.Log(lieuDitManon);
                     Debug.Log(lieuPropose);
                 }
@@ -195,57 +220,6 @@ public class GameManager : MonoBehaviour
             }
             Reponse2.text = "Désolé, je suis occupé au " + Ou;
             yield return null;
-       // }
-        /*else {
-            Debug.Log("Maman");
-            maman = true;
-            Qui.text = "Maman";
-            panel.SetActive(true);
-            phase1 = false;
-            Quoi.text = "Vient me voir !";
-            randQuoi = Random.Range(1, 4);
-            int check = randQuoi;
-            switch (randQuoi)
-            {
-                case 1:
-                    Ou = "Supermarché";
-                    lieuPropose = Lieu.Supermarche;
-                    break;
-                case 2:
-                    Ou = "Restaurant";
-                    lieuPropose = Lieu.Resto;
-                    break;
-                case 3:
-                    Ou = "Footing";
-                    lieuPropose = Lieu.Footing;
-                    break;
-            }
-            Reponse1.text = "Désolé, je suis occupé au " + Ou;
-            randQuoi = Random.Range(1, 4);
-            while (randQuoi == check)
-            {
-                randQuoi = Random.Range(1, 4);
-            }
-            switch (randQuoi)
-            {
-                case 1:
-                    Ou = "Supermarché";
-                    lieuPropose2 = Lieu.Supermarche;
-                    break;
-                case 2:
-                    Ou = "Restaurant";
-                    lieuPropose2 = Lieu.Resto;
-                    break;
-                case 3:
-                    Ou = "Footing";
-                    lieuPropose2 = Lieu.Footing;
-                    break;
-            }
-            Reponse2.text = "Désolé, je suis occupé au " + Ou;
-            flagPhoneDebut = true;
-            //yield return null;
-        }*/
-
     }
 
 
@@ -270,7 +244,6 @@ public class GameManager : MonoBehaviour
             phase1 = true;
             buttonPushed = false;
             pController.currAction = PlayerController.Action.Nothing;
-            encoreUnAutreFlag = false;
 
         }
     }
@@ -293,7 +266,6 @@ public class GameManager : MonoBehaviour
             phase1 = true;
             buttonPushed = false;
             pController.currAction = PlayerController.Action.Nothing;
-            encoreUnAutreFlag = false;
         }
     }
 
@@ -386,5 +358,44 @@ public class GameManager : MonoBehaviour
                 break;
         }
         Reponse4.text = "J'ai dit que j'étais au " + Ou;
+    }
+
+    public void GameOver(TypeGameOver typo) {
+        gameover = true;
+        switch (typo) {
+            case TypeGameOver.Boire:
+                GameOverTexte.text = "Mort de soif";
+                break;
+            case TypeGameOver.Coloc:
+                GameOverTexte.text = "Tes colocs t'ont emené te bourrer la gueule.";
+                break;
+            case TypeGameOver.Faim:
+                GameOverTexte.text = "Mort de faim";
+                break;
+            case TypeGameOver.MamanFausseReponse:
+                GameOverTexte.text = "Mort de maman";
+                break;
+            case TypeGameOver.MamanTimer:
+                GameOverTexte.text = "Mort de maman";
+                break;
+            case TypeGameOver.ManonFausseReponse:
+                GameOverTexte.text = "Mort de manon";
+                break;
+            case TypeGameOver.ManonTimer:
+                GameOverTexte.text = "Mort de manon";
+                break;
+            case TypeGameOver.Pipi:
+                GameOverTexte.text = "Mort de pipi";
+                break;
+        }
+        GameOverPanel.SetActive(true);
+    }
+
+    public void Retry() {
+        
+    }
+
+    public void GotToMenu() {
+
     }
 }

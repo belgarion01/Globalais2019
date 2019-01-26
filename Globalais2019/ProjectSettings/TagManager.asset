@@ -41,6 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Sol
+    uniqueID: 47395533
+    locked: 0
   - name: UI
     uniqueID: 3574034299
+    locked: 0
+  - name: Mur
+    uniqueID: 2047905725
+    locked: 0
+  - name: Objects
+    uniqueID: 2162968743
+    locked: 0
+  - name: Player
+    uniqueID: 2316347683
+    locked: 0
+  - name: Meuble
+    uniqueID: 1579416187
+    locked: 0
+  - name: MurDevant
+    uniqueID: 3677366207
     locked: 0

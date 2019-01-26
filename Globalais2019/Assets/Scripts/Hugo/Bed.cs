@@ -6,11 +6,10 @@ public class Bed : MonoBehaviour
 {
     private PlayerController pController;
 
-    public float radius;
+    public Vector2 size;
+    public Vector2 offset;
 
     public bool gizmos = false;
-
-    public bool active;
 
     void Start()
     {
@@ -19,12 +18,16 @@ public class Bed : MonoBehaviour
 
     void Update()
     {
-        if (Physics2D.OverlapCircle(transform.position, radius, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
+        if (Physics2D.OverlapBox((Vector2)transform.position+offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                GetComponent<BoxCollider2D>().isTrigger = true;
                 pController.FHiding();
             }
+        }
+        if (pController.currAction != PlayerController.Action.isHiding) {
+            GetComponent<BoxCollider2D>().isTrigger = false;
         }
     }
 
@@ -32,7 +35,7 @@ public class Bed : MonoBehaviour
     {
         if (gizmos)
         {
-            Gizmos.DrawSphere(transform.position, radius);
+            Gizmos.DrawCube((Vector2)transform.position+offset, new Vector3(size.x, size.y, 1f));
         }
     }
 }
