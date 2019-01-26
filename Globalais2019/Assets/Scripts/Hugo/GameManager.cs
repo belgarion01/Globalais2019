@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
     public float colocTimer;
     private float currColocTimer;
     private bool isColocing = false;
+    private bool ColocBAM = false;
+    public Light coloclight;
+    public Animator PorteColoc;
+    public Animator Lit;
 
     private PlayerController pController;
 
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameover)
         {
+            Lit.SetBool("Actif", pController.hided);
             if (Input.GetKeyDown(KeyCode.R))
             {
                 StartCoroutine(Phoning());
@@ -97,10 +102,11 @@ public class GameManager : MonoBehaviour
             }
             else if (currColocTimer < 0)
             {
+                Debug.Log("ColocTIME");
                 StartCoroutine(ColocTime());
             }
 
-            if (!pController.hided && isColocing)
+            if (!pController.hided && ColocBAM)
             {
                 GameOver(TypeGameOver.Coloc);
             }
@@ -160,7 +166,7 @@ public class GameManager : MonoBehaviour
             }
             if (maman)
             {
-                if ((buttonPushedRight == false && lieuPropose != lieuDitMaman) || (buttonPushedRight = true && lieuPropose == lieuDitMaman) && phase1)
+                if ((buttonPushedRight == false && lieuPropose != lieuDitMaman) || (buttonPushedRight == true && lieuPropose == lieuDitMaman) && phase1)
                 {
                 GameOver(TypeGameOver.MamanFausseReponse);
                     Debug.Log(buttonPushedRight);
@@ -170,7 +176,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if ((buttonPushedRight == false && lieuPropose != lieuDitManon) || (buttonPushedRight = true && lieuPropose == lieuDitManon) && phase1)
+                if ((buttonPushedRight == false && lieuPropose != lieuDitManon) || (buttonPushedRight == true && lieuPropose == lieuDitManon) && phase1)
                 {
                 GameOver(TypeGameOver.ManonFausseReponse);
                 Debug.Log(buttonPushedRight);
@@ -227,6 +233,7 @@ public class GameManager : MonoBehaviour
         if (phase1)
         {
             buttonPushedRight = false;
+            Debug.Log(buttonPushedRight);
             buttonPushed = true;           
         }
         else {
@@ -251,6 +258,7 @@ public class GameManager : MonoBehaviour
     public void R2() {
         if (phase1)
         {
+            Debug.Log("Bouton de droite");
             buttonPushedRight = true;
             buttonPushed = true;         
         }
@@ -284,8 +292,22 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator ColocTime() {
+
         isColocing = true;
-        yield return new WaitForSeconds(2f);
+        while (coloclight.intensity < 2) {
+            coloclight.intensity += 0.002f * Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        PorteColoc.SetTrigger("Coloc");
+    }
+
+    public void Coloc() {
+        ColocBAM = true;
+    }
+
+    public void FinishColoc() {
+        coloclight.intensity = 0f;
+        ColocBAM = false;
         isColocing = false;
         ResetColocTimer();
     }
@@ -367,7 +389,7 @@ public class GameManager : MonoBehaviour
                 GameOverTexte.text = "Mort de soif";
                 break;
             case TypeGameOver.Coloc:
-                GameOverTexte.text = "Tes colocs t'ont emené te bourrer la gueule.";
+                GameOverTexte.text = "Tes colocs t'ont emmené te bourrer la gueule.";
                 break;
             case TypeGameOver.Faim:
                 GameOverTexte.text = "Mort de faim";

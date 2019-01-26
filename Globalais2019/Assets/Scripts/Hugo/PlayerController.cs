@@ -22,9 +22,12 @@ public class PlayerController : MonoBehaviour
     public Transform chairPosition;
     public Transform bedPosition;
 
+    private bool TAP = true;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         gManager = FindObjectOfType<GameManager>();
     }
 
@@ -34,23 +37,28 @@ public class PlayerController : MonoBehaviour
         switch (currAction) {
             case Action.Nothing:
                 Move();
+                anim.SetInteger("Action", 0);
                 break;
             case Action.isPlaying:
-               
+                anim.SetInteger("Action", 1);
+                anim.SetBool("TAP", TAP);
                 break;
             case Action.isHiding:
+                anim.SetInteger("Action", 2);
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     currAction = Action.Nothing;
                 }
                 break;
             case Action.isDrinking:
+                anim.SetInteger("Action", 3);
                 gManager.Drinking();
                 if (Input.GetKeyDown(KeyCode.A)) {
                     currAction = Action.Nothing;
                 }
                 break;
             case Action.isEating:
+                anim.SetInteger("Action", 4);
                 gManager.Eating();
                 if (Input.GetKeyDown(KeyCode.A))
                 {
@@ -60,6 +68,7 @@ public class PlayerController : MonoBehaviour
             case Action.isPhoning:
                 break;
             case Action.isPissing:
+                anim.SetInteger("Action", 6);
                 gManager.Pissing();
                 if (Input.GetKeyDown(KeyCode.A))
                 {
@@ -78,26 +87,37 @@ public class PlayerController : MonoBehaviour
         if (vAxis < 0)
         {
             currDirection = Direction.Bas;
+            anim.SetInteger("Direction", 2);
             //moveDir = new Vector2(0, -1);
         }
         else if (vAxis > 0)
         {
             currDirection = Direction.Haut;
+            anim.SetInteger("Direction", 0);
             //moveDir = new Vector2(0, 1);
         }
         else if (hAxis < 0)
         {
             currDirection = Direction.Gauche;
+            anim.SetInteger("Direction", 3);
             //moveDir = new Vector2(0, -1);
         }
         else if (hAxis > 0)
         {
             currDirection = Direction.Droite;
+            anim.SetInteger("Direction", 1);
             //moveDir = new Vector2(0, -1);
         }
 
         moveDir = new Vector2(hAxis, vAxis).normalized;
         rb2d.MovePosition((Vector2)transform.position + moveDir * speed * Time.deltaTime);
+        if (moveDir.magnitude > 0)
+        {
+            anim.SetBool("isMoving", true);
+        }
+        else {
+            anim.SetBool("isMoving", false);
+        }
     }
 
     public void FPlaying() {
@@ -112,6 +132,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 gManager.GetMoney();
+                TAP = !TAP;
             }
             if (Input.GetKeyDown(KeyCode.A))
             {

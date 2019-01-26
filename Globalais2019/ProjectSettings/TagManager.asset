@@ -44,9 +44,6 @@ TagManager:
   - name: Sol
     uniqueID: 47395533
     locked: 0
-  - name: UI
-    uniqueID: 3574034299
-    locked: 0
   - name: Mur
     uniqueID: 2047905725
     locked: 0
@@ -61,4 +58,7 @@ TagManager:
     locked: 0
   - name: MurDevant
     uniqueID: 3677366207
+    locked: 0
+  - name: UI
+    uniqueID: 3574034299
     locked: 0
