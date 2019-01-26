@@ -8,6 +8,7 @@ public class PizzaGameDetector : MonoBehaviour
     public GameObject PizzaOnCanvas;
     public PizzaRandomizer pizzaRandomizer;
 
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A))
@@ -39,7 +40,6 @@ public class PizzaGameDetector : MonoBehaviour
             PizzaOnCanvas.SetActive(false);
         }
     }
-
 
 
 }

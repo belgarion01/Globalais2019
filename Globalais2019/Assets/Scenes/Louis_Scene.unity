@@ -181,7 +181,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 186049282}
   m_OnClick:
     m_PersistentCalls:
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 213013740}
   m_Layer: 5
   m_Name: Part 2
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -378,6 +378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 213013735}
 --- !u!1 &349318988
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +560,7 @@ GameObject:
   - component: {fileID: 366458927}
   m_Layer: 5
   m_Name: Part 1
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -684,6 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 366458922}
 --- !u!1 &415297791
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,10 +723,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterSlider: {fileID: 948839878}
   foodSlider: {fileID: 1094816724}
+  pizzaRandomizerObject: {fileID: 1353962693}
   waterNeed: 1
   foodNeed: 1
   peeNeed: 0
   level: 1
+  mesSlices: []
 --- !u!114 &415297793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1050,7 +1056,7 @@ GameObject:
   - component: {fileID: 798892810}
   m_Layer: 5
   m_Name: Part 7
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1176,6 +1182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 798892805}
 --- !u!1 &888215568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1600,7 @@ GameObject:
   - component: {fileID: 1172134337}
   m_Layer: 5
   m_Name: Part 3
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1718,6 +1726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 1172134332}
 --- !u!1 &1178771568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,7 +2001,7 @@ GameObject:
   - component: {fileID: 1345979245}
   m_Layer: 5
   m_Name: Part 8
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2117,6 +2127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 1345979240}
 --- !u!1 &1353962693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2200,7 @@ GameObject:
   - component: {fileID: 1412539419}
   m_Layer: 5
   m_Name: Part 5
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2314,6 +2326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 1412539414}
 --- !u!1 &1493314466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,7 +2425,7 @@ GameObject:
   - component: {fileID: 1610481419}
   m_Layer: 5
   m_Name: Part 4
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2537,6 +2551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 1610481414}
 --- !u!1 &1620702451
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +3067,7 @@ GameObject:
   - component: {fileID: 2006408021}
   m_Layer: 5
   m_Name: Part 6
-  m_TagString: Untagged
+  m_TagString: Slice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3177,6 +3193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9ac8e00fa44c84a8a99f59531ee6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joueur: {fileID: 415297791}
+  myself: {fileID: 2006408016}
 --- !u!1 &2020787281
 GameObject:
   m_ObjectHideFlags: 0

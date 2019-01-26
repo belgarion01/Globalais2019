@@ -25,20 +25,15 @@ public class PizzaRandomizer : MonoBehaviour
 
     public void RandomizePizza()
     {
-
-        int pineappleSlices = Random.Range(1, 4);
-        Debug.Log(pineappleSlices);
+        int pineappleSlices = Random.Range(1, 5);
         int goodSlices = 8 - pineappleSlices;
-        Debug.Log(goodSlices);
-        int i = 0;
+        int i;
         int j;
 
         for (i = pineappleSlices; i != 0; i--)
         {
             int rIndex = Random.Range(0, randomNumber.Count);
-            Debug.Log(rIndex + " = rIndex");
             int pickedNumber = randomNumber[rIndex];
-            Debug.Log(pickedNumber + " = pickedNumber");
             mySlicesList[pickedNumber].sprite = pineapplePizza;
             randomNumber.RemoveAt(rIndex);
         }
@@ -53,8 +48,6 @@ public class PizzaRandomizer : MonoBehaviour
                 randomNumber.RemoveAt(rIndex);
             }
         }
-
-
 
     }
 
