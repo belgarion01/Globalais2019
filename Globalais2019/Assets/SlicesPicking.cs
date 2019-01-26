@@ -7,15 +7,18 @@ public class SlicesPicking : MonoBehaviour
 {
 
     public GameObject joueur;
+    public GameObject myself;
 
     Image pizzaSprite;
-    NeedsManager myPlayer;
+    NeedsManager pizzaManager;
 
     // Start
     void Start()
     {
         pizzaSprite = this.GetComponent<Image>();
+        pizzaManager = joueur.GetComponent<NeedsManager>();
 
+        pizzaManager.mesSlices.Add(this.gameObject);
     }
 
     // Update
@@ -27,20 +30,18 @@ public class SlicesPicking : MonoBehaviour
 
     public void TypeOfSlices()
     {
-
-        if(pizzaSprite.sprite.name == "GoodPizza")
+        if (pizzaSprite.sprite.name == "GoodPizza")
         {
+            pizzaManager.foodNeed = pizzaManager.foodNeed + 0.1f;
 
-
-            this.enabled = false;
+            myself.SetActive(false);
         }
 
         if (pizzaSprite.sprite.name == "PineapplePizza")
         {
+            pizzaManager.foodNeed = pizzaManager.foodNeed - 0.2f;
 
-
-            this.enabled = false;
+            myself.SetActive(false);
         }
-
     }
 }

@@ -8,9 +8,13 @@ public class NeedsManager : MonoBehaviour
 
     public GameObject waterSlider;
     public GameObject foodSlider;
+    public GameObject pizzaRandomizerObject;
 
     Slider waterBar;
     Slider foodBar;
+    Slider peeBar;
+
+    PizzaRandomizer pizzaRandomizer;
 
     public float waterNeed = 1f;
     public float foodNeed = 1f;
@@ -24,11 +28,14 @@ public class NeedsManager : MonoBehaviour
     float waterRate;
     float foodRate;
 
+    public List<GameObject> mesSlices = new List<GameObject>();
+
     // Start
     void Start()
     {
         waterBar = waterSlider.GetComponent<Slider>();
         foodBar = foodSlider.GetComponent<Slider>();
+        pizzaRandomizer = pizzaRandomizerObject.GetComponent<PizzaRandomizer>();
 
         waterRate = 10 / level;
         foodRate = 5 / level;
@@ -90,7 +97,10 @@ public class NeedsManager : MonoBehaviour
             peeNeed = 0;
         }
 
-
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            PizzaReset();
+        }
     }
 
 
@@ -127,6 +137,16 @@ public class NeedsManager : MonoBehaviour
     public void PeeEmptier()
     {
         peeNeed = peeNeed - 0.01f;
+    }
+
+    public void PizzaReset()
+    {
+        for (int i = 0; i < mesSlices.Count; i++)
+        {
+            mesSlices[i].SetActive(true);
+        }
+        pizzaRandomizer.randomNumber = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 };
+        pizzaRandomizer.RandomizePizza();
     }
 
 
