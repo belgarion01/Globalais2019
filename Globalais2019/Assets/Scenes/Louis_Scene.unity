@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 415297793}
   - component: {fileID: 415297792}
   - component: {fileID: 415297797}
+  - component: {fileID: 415297798}
   m_Layer: 0
   m_Name: GAGAGA_Blue_LookingLeft
   m_TagString: Player
@@ -745,8 +746,8 @@ MonoBehaviour:
   currAction: 0
   hided: 0
   lastPosition: {x: 0, y: 0, z: 0}
-  chairPosition: {fileID: 0}
-  bedPosition: {fileID: 0}
+  chairPosition: {fileID: 1353962695}
+  bedPosition: {fileID: 1212298894}
 --- !u!50 &415297794
 Rigidbody2D:
   serializedVersion: 4
@@ -857,6 +858,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2571264, y: 0.23467162}
   m_EdgeRadius: 0
+--- !u!95 &415297798
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415297791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2e2af10e1ea5a3b4e9b218bd744a8756, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &469345573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,10 +2890,10 @@ Canvas:
   m_GameObject: {fileID: 1697913838}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1493314468}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0

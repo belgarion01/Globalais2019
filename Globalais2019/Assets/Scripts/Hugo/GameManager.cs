@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI GameOverTexte;
     public GameObject GameOverPanel;
 
+    public TextMeshProUGUI moneyTexte;
+
     void Start()
     {
         pController = FindObjectOfType<PlayerController>();
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameover)
         {
+            UpdateJauge();
             Lit.SetBool("Actif", pController.hided);
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -100,7 +103,7 @@ public class GameManager : MonoBehaviour
             {
                 currColocTimer -= Time.deltaTime;
             }
-            else if (currColocTimer < 0)
+            else if (currColocTimer < 0&&!isColocing)
             {
                 Debug.Log("ColocTIME");
                 StartCoroutine(ColocTime());
@@ -123,6 +126,10 @@ public class GameManager : MonoBehaviour
                 GameOver(TypeGameOver.Boire);
             }
         }
+    }
+
+    void UpdateJauge() {
+        moneyTexte.text = moneyCount.ToString();
     }
 
     IEnumerator Phoning() {
@@ -295,10 +302,12 @@ public class GameManager : MonoBehaviour
 
         isColocing = true;
         while (coloclight.intensity < 2) {
-            coloclight.intensity += 0.002f * Time.deltaTime;
+            Debug.Log("youhou");
+            coloclight.intensity += 0.5f * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         PorteColoc.SetTrigger("Coloc");
+        Debug.Log("quetete");
     }
 
     public void Coloc() {

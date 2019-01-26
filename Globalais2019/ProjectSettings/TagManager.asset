@@ -48,6 +48,9 @@ TagManager:
   - name: Mur
     uniqueID: 2047905725
     locked: 0
+  - name: "MeubleArri\xE8re"
+    uniqueID: 1407671121
+    locked: 0
   - name: Objects
     uniqueID: 2162968743
     locked: 0

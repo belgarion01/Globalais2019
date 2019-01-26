@@ -149,9 +149,10 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator Hiding()
     {
+        currAction = Action.isHiding;
+        GetComponent<SpriteRenderer>().enabled = false;
         lastPosition = transform.position;
         transform.position = bedPosition.position;
-        currAction = Action.isHiding;
         bool active = true;
         while (active)
         {
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         transform.position = lastPosition;
+        GetComponent<SpriteRenderer>().enabled = true;
         currAction = Action.Nothing;
     }
 }
