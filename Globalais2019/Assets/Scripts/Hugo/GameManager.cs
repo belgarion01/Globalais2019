@@ -13,10 +13,12 @@ public class GameManager : MonoBehaviour
     private float soifLevel = 1f;
     public float soifDiminution;
     public float soifGain;
+    public float soifRatio;
 
     private float mangerLevel = 1f;
     public float mangerDiminution;
     public float mangerGain;
+    public float mangerRatio;
 
     private float pipiLevel = 0f;
     public float pipiDiminution;
@@ -99,6 +101,8 @@ public class GameManager : MonoBehaviour
             timeDecoul += Time.deltaTime;
             TimeDecoulerText.text = timeDecoul.ToString("F2");
             UpdateJauge();
+            soifDiminution += soifRatio * Time.deltaTime;
+            mangerDiminution += mangerRatio * Time.deltaTime;
             Hunger();
             Thirst();
             Lit.SetBool("Actif", pController.hided);
@@ -462,10 +466,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void Hunger() {
+
         mangerLevel -= mangerDiminution*Time.deltaTime;
     }
 
     public void Thirst() {
-        soifLevel -= soifDiminution*Time.deltaTime;
+        if (pController.currAction != PlayerController.Action.isDrinking)
+        {
+            soifLevel -= soifDiminution * Time.deltaTime;
+        }
     }
 }
