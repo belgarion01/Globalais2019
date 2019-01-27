@@ -34,14 +34,15 @@ public class ChaiseJouer : MonoBehaviour
                 pController.FPlaying();
             }
         }
+        else
+        {
+            JouerPanelEntrer.SetActive(false);
+        }
         if (pController.currAction != PlayerController.Action.isPlaying)
         {
             pController.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
             chair.GetComponent<BoxCollider2D>().isTrigger = false;
             table.GetComponent<BoxCollider2D>().isTrigger = false;
-        }
-        else {
-            JouerPanelEntrer.SetActive(false);
         }
         if (pController.currAction == PlayerController.Action.isPlaying)
         {

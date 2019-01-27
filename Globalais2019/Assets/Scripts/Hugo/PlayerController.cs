@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
         while (active) {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.Log("Argent");
                 gManager.GetMoney();
                 TAP = !TAP;
             }

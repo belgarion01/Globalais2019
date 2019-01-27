@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenetrePipi : MonoBehaviour
+public class FenetrePipi2 : MonoBehaviour
 {
     private PlayerController pController;
     public Vector2 size;
@@ -34,12 +34,13 @@ public class FenetrePipi : MonoBehaviour
             inRange = true;
             if (Input.GetKeyDown(KeyCode.E))
             {
-                pController.GetComponent<Animator>().SetBool("FDroite", false);
+                pController.GetComponent<Animator>().SetBool("FDroite", true);
                 pController.currAction = PlayerController.Action.isPissing;
                 open = true;
             }
         }
-        else {
+        else
+        {
             PipiEntrer.SetActive(false);
         }
         if (pController.currAction != PlayerController.Action.isPissing)
@@ -47,7 +48,8 @@ public class FenetrePipi : MonoBehaviour
             open = false;
             PipiSortir.SetActive(false);
         }
-        else {
+        else
+        {
             PipiSortir.SetActive(true);
             PipiEntrer.SetActive(false);
         }

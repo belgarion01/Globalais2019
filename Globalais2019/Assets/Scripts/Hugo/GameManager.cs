@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public float moneyCount;
-    public float moneyGain;
+    public int moneyCount;
+    public int moneyGain;
 
     private float soifLevel = 1f;
     public float soifDiminution;
@@ -74,21 +74,30 @@ public class GameManager : MonoBehaviour
     public Image JaugeCoca;
     public Image JaugeManger;
 
+    public TextMeshProUGUI TimeDecoulerText;
+    private float timeDecoul;
+
+    private int Score;
+    public TextMeshProUGUI ScoreTexte;
+
     void Start()
     {
         pController = FindObjectOfType<PlayerController>();
         currPhoneTimer = phoneTimer;
         currColocTimer = colocTimer;
         WhereWereYou();
+        timeDecoul = 0f;
         //StartCoroutine(Phoning());  
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (!gameover)
         {
-
+            timeDecoul += Time.deltaTime;
+            TimeDecoulerText.text = timeDecoul.ToString("F2");
             UpdateJauge();
             Hunger();
             Thirst();
@@ -439,6 +448,8 @@ public class GameManager : MonoBehaviour
                 GameOverTexte.text = "Mort de pipi";
                 break;
         }
+        Score = (Mathf.RoundToInt(timeDecoul)*2) + moneyCount * 5;
+        ScoreTexte.text = Score.ToString();
         GameOverPanel.SetActive(true);
     }
 
