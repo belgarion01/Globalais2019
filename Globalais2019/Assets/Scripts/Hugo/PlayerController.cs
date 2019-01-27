@@ -26,11 +26,14 @@ public class PlayerController : MonoBehaviour
 
     private bool TAP = true;
 
+    private AudioManager aManager;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         gManager = FindObjectOfType<GameManager>();
+        aManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetInteger("Action", 2);
                 if (Input.GetKeyDown(KeyCode.A))
                 {
+                    aManager.StopSound("Ronflement");
                     currAction = Action.Nothing;
                 }
                 break;
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetInteger("Action", 3);
                 gManager.Drinking();
                 if (Input.GetKeyDown(KeyCode.A)) {
+                    aManager.StopSound("Gloup");
                     currAction = Action.Nothing;
                 }
                 break;
@@ -81,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 gManager.Pissing();
                 if (Input.GetKeyDown(KeyCode.A))
                 {
+                    FindObjectOfType<AudioManager>().StopSound("Pipi");
                     currAction = Action.Nothing;
                 }
                 break;
@@ -142,6 +148,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("Argent");
                 gManager.GetMoney();
+                aManager.PlaySound("Coin");
                 TAP = !TAP;
             }
             if (Input.GetKeyDown(KeyCode.A))

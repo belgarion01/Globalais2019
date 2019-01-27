@@ -32,6 +32,7 @@ public class Bed : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FindObjectOfType<AudioManager>().PlaySound("Ronflement");
                 GetComponent<BoxCollider2D>().isTrigger = true;
                 pController.FHiding();
             }
@@ -44,7 +45,10 @@ public class Bed : MonoBehaviour
         }
 
         if (pController.currAction == PlayerController.Action.isHiding) {
-
+            HidPanelSortir.SetActive(true);
+        }
+        else{
+            HidPanelSortir.SetActive(false);
         }
     }
 

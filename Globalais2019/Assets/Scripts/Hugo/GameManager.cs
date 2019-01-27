@@ -84,22 +84,37 @@ public class GameManager : MonoBehaviour
 
     private AudioManager aManager;
 
+    private bool musiqueFlag = false;
+
+    private float timerGameOver;
+
     void Start()
     {
         pController = FindObjectOfType<PlayerController>();
+        aManager = FindObjectOfType<AudioManager>();
         currPhoneTimer = phoneTimer;
         currColocTimer = colocTimer;
         WhereWereYou();
         timeDecoul = 0f;
-
-        aManager.PlaySound("MainMusic");
+        timerGameOver = 0f;
+        aManager.PlaySound("MainMusique");
         //StartCoroutine(Phoning());  
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameover) {
+            timerGameOver += Time.deltaTime;
+            if (timerGameOver > 4f) {
+                SceneManager.LoadScene(0);
+            }
+        }
+        if (Time.time > 160f&&!musiqueFlag) {
+            aManager.StopSound("MainMusique");
+            aManager.PlaySound("SecondMusique");
+            musiqueFlag = true;
+        }
         if (!gameover)
         {
             timeDecoul += Time.deltaTime;
@@ -224,6 +239,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             phase1 = false;
+        aManager.PlaySound("Talk2");
             Quoi.text = "Vient me voir !";
             randQuoi = Random.Range(1, 4);
             int check = randQuoi;
@@ -433,30 +449,31 @@ public class GameManager : MonoBehaviour
         gameover = true;
         switch (typo) {
             case TypeGameOver.Boire:
-                GameOverTexte.text = "Mort de soif";
+                GameOverTexte.text = "Tu n'arrive même pas à baver tellement tu as soif";
                 break;
             case TypeGameOver.Coloc:
                 GameOverTexte.text = "Tes colocs t'ont emmené te bourrer la gueule.";
                 break;
             case TypeGameOver.Faim:
-                GameOverTexte.text = "Mort de faim";
+                GameOverTexte.text = "Ton ventre s'est digéré lui même";
                 break;
             case TypeGameOver.MamanFausseReponse:
-                GameOverTexte.text = "Mort de maman";
+                GameOverTexte.text = "Ta mère a compris que tu lui mentais";
                 break;
             case TypeGameOver.MamanTimer:
                 GameOverTexte.text = "Mort de maman";
                 break;
             case TypeGameOver.ManonFausseReponse:
-                GameOverTexte.text = "Mort de manon";
+                GameOverTexte.text = "Ta copine a compris que tu lui mentais";
                 break;
             case TypeGameOver.ManonTimer:
                 GameOverTexte.text = "Mort de manon";
                 break;
             case TypeGameOver.Pipi:
-                GameOverTexte.text = "Mort de pipi";
+                GameOverTexte.text = "Tu as du appeler les urgences pour ta vessie";
                 break;
         }
+        aManager.PlaySound("GameOver");
         Score = (Mathf.RoundToInt(timeDecoul)*2) + moneyCount * 5;
         ScoreTexte.text = Score.ToString();
         GameOverPanel.SetActive(true);

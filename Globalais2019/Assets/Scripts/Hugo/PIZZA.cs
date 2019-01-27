@@ -9,6 +9,10 @@ public class PIZZA : MonoBehaviour
     public Vector2 size;
     public Vector2 offset;
 
+
+    public GameObject PizzaPanelEntrer;
+    public GameObject PizzaPanelSortir;
+
     public bool gizmos = false;
 
     void Start()
@@ -20,10 +24,22 @@ public class PIZZA : MonoBehaviour
     {
         if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isEating)
         {
-            if (Input.GetKeyDown(KeyCode.E)&&pController.currAction != PlayerController.Action.isPhoning)
+            PizzaPanelEntrer.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E) && pController.currAction != PlayerController.Action.isPhoning)
             {
                 pController.currAction = PlayerController.Action.isEating;
             }
+        }
+        else {
+            PizzaPanelEntrer.SetActive(false);
+        }
+
+        if (pController.currAction == PlayerController.Action.isEating)
+        {
+            PizzaPanelSortir.SetActive(true);
+        }
+        else {
+            PizzaPanelSortir.SetActive(false);
         }
     }
 

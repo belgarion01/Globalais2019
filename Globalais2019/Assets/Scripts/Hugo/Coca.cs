@@ -28,6 +28,7 @@ public class Coca : MonoBehaviour
             BoirePanelEntrer.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FindObjectOfType<AudioManager>().PlaySound("Gloup");
                 pController.currAction = PlayerController.Action.isDrinking;
             }
         }

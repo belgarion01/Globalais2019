@@ -17,6 +17,8 @@ public class FenetrePipi : MonoBehaviour
 
     public bool gizmos = false;
 
+
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -34,6 +36,7 @@ public class FenetrePipi : MonoBehaviour
             inRange = true;
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FindObjectOfType<AudioManager>().PlaySound("Pipi");
                 pController.GetComponent<Animator>().SetBool("FDroite", false);
                 pController.currAction = PlayerController.Action.isPissing;
                 open = true;

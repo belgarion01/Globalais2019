@@ -77,9 +77,11 @@ public class PizzaManager : MonoBehaviour
         pizza.GetComponent<Image>().enabled = false;
         if (pizza.GetComponent<SinglePizza>().ananas)
         {
+            FindObjectOfType<AudioManager>().PlaySound("Degout");
             FindObjectOfType<GameManager>().EatingAnanas();
         }
         else {
+            FindObjectOfType<AudioManager>().PlaySound("Manger");
             FindObjectOfType<GameManager>().EatingPizza();
         }
     }

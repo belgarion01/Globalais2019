@@ -10,10 +10,11 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] sounds;
 
-    void Start()
+    private void Awake()
     {
-        foreach (Sound s in sounds) {
-            gameObject.GetComponent<AudioSource>();
+        foreach (Sound s in sounds)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
 
             s.source.clip = s.clip;
 
@@ -22,6 +23,11 @@ public class AudioManager : MonoBehaviour
 
             s.source.loop = s.loop;
         }
+    }
+
+    void Start()
+    {
+       
     }
 
     void Update()
@@ -35,5 +41,14 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Play();
+    }
+
+    public void StopSound(string name) {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            return;
+        }
+        s.source.Stop();
     }
 }
