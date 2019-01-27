@@ -6,6 +6,8 @@ using TMPro;
 public class ChaiseJouer : MonoBehaviour
 {
     private PlayerController pController;
+    public GameObject chair;
+    public GameObject table;
 
     public float radius;
 
@@ -24,8 +26,17 @@ public class ChaiseJouer : MonoBehaviour
             {
                 /*pController.lastPosition = pController.gameObject.transform.position;
                 pController.currAction = PlayerController.Action.isPlaying;*/
+                
+                chair.GetComponent<BoxCollider2D>().isTrigger = true;
+                table.GetComponent<BoxCollider2D>().isTrigger = true;
+                pController.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Meuble";
                 pController.FPlaying();
             }
+        }
+        if (pController.currAction != PlayerController.Action.isPlaying) {
+            pController.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
+            chair.GetComponent<BoxCollider2D>().isTrigger = false;
+            table.GetComponent<BoxCollider2D>().isTrigger = false;
         }
     }
 

@@ -8,10 +8,15 @@ public class FenetrePipi : MonoBehaviour
     public Vector2 size;
     public Vector2 offset;
 
+    private Animator anim;
+    private bool open = false;
+    private bool inRange;
+
     public bool gizmos = false;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         pController = FindObjectOfType<PlayerController>();
     }
 
@@ -19,11 +24,18 @@ public class FenetrePipi : MonoBehaviour
     {
         if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
+            Debug.Log("eee");
+            inRange = true;
             if (Input.GetKeyDown(KeyCode.E))
             {
                 pController.currAction = PlayerController.Action.isPissing;
+                open = true;
             }
         }
+        if (pController.currAction != PlayerController.Action.isPissing) {
+            open = false;
+        }
+        anim.SetBool("Open", open);
     }
 
     private void OnDrawGizmos()

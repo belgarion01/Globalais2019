@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private float moneyCount;
+    public float moneyCount;
     public float moneyGain;
 
     private float soifLevel = 1f;
@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverPanel;
 
     public TextMeshProUGUI moneyTexte;
+    public Image JaugePipi;
+    public Image JaugeCoca;
+    public Image JaugeManger;
 
     void Start()
     {
@@ -82,19 +85,17 @@ public class GameManager : MonoBehaviour
     {
         if (!gameover)
         {
+
             UpdateJauge();
+            Hunger();
+            Thirst();
             Lit.SetBool("Actif", pController.hided);
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                StartCoroutine(Phoning());
-            }
-            if (currPhoneTimer >= 0 && pController.currAction != PlayerController.Action.isPhoning && !isColocing)
+            if (currPhoneTimer >= 0 && pController.currAction != PlayerController.Action.isPhoning && !isColocing&&pController.currAction != PlayerController.Action.isEating)
             {
                 currPhoneTimer -= Time.deltaTime;
             }
             else if (pController.currAction != PlayerController.Action.isPhoning && currPhoneTimer < 0)
             {
-                //pController.currAction = PlayerController.Action.isPhoning;
                 ResetPhoneTimer();
                 StartCoroutine(Phoning());
             }
@@ -120,16 +121,24 @@ public class GameManager : MonoBehaviour
             if (soifLevel <= 0)
             {
                 GameOver(TypeGameOver.Boire);
+                Debug.Log(soifLevel);
             }
             if (pipiLevel >= 1)
             {
-                GameOver(TypeGameOver.Boire);
+                GameOver(TypeGameOver.Pipi);
             }
         }
     }
 
     void UpdateJauge() {
         moneyTexte.text = moneyCount.ToString();
+        pipiLevel= Mathf.Clamp(pipiLevel, 0f, 1f);
+        mangerLevel = Mathf.Clamp(mangerLevel, 0f, 1f);
+        soifLevel = Mathf.Clamp(soifLevel, 0f, 1f);
+
+        JaugePipi.fillAmount = pipiLevel;
+        JaugeManger.fillAmount = mangerLevel;
+        JaugeCoca.fillAmount = soifLevel;
     }
 
     IEnumerator Phoning() {
@@ -302,7 +311,6 @@ public class GameManager : MonoBehaviour
 
         isColocing = true;
         while (coloclight.intensity < 2) {
-            Debug.Log("youhou");
             coloclight.intensity += 0.5f * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -326,15 +334,22 @@ public class GameManager : MonoBehaviour
     }
 
     public void Drinking() {
-        soifLevel += soifGain;
+        soifLevel += soifGain * Time.deltaTime;
+        pipiLevel += pipiGain * Time.deltaTime;
     }
 
     public void Pissing() {
-        pipiLevel -= pipiDiminution;
+        pipiLevel -= pipiDiminution * Time.deltaTime;
     }
 
-    public void Eating() {
+    public void EatingPizza() {
         mangerLevel += mangerGain;
+        Debug.Log("Manger une bonne pizza");
+    }
+
+    public void EatingAnanas() {
+        mangerLevel -= mangerGain;
+        Debug.Log("Manger un fucking ananas");
     }
 
     void ResetPhoneTimer() {
@@ -428,5 +443,13 @@ public class GameManager : MonoBehaviour
 
     public void GotToMenu() {
 
+    }
+
+    public void Hunger() {
+        mangerLevel -= mangerDiminution*Time.deltaTime;
+    }
+
+    public void Thirst() {
+        soifLevel -= soifDiminution*Time.deltaTime;
     }
 }

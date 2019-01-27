@@ -7,6 +7,9 @@ public class Coca : MonoBehaviour
     private PlayerController pController;
 
     public float radius;
+    public Vector2 size;
+
+    public Vector2 offset;
 
     public bool gizmos = false;
 
@@ -17,7 +20,7 @@ public class Coca : MonoBehaviour
 
     void Update()
     {
-        if (Physics2D.OverlapCircle(transform.position, radius, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
+        if (Physics2D.OverlapBox((Vector2)transform.position+offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -30,7 +33,7 @@ public class Coca : MonoBehaviour
     {
         if (gizmos)
         {
-            Gizmos.DrawSphere(transform.position, radius);
+            Gizmos.DrawCube((Vector2)transform.position + offset, size);
         }
     }
 }

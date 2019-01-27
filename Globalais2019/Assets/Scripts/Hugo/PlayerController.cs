@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public Transform chairPosition;
     public Transform bedPosition;
 
+    public GameObject eatingPanel;
+
     private bool TAP = true;
 
     void Start()
@@ -34,6 +36,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (currAction != Action.isPlaying) {
+            GetComponent<SpriteRenderer>().sortingOrder = SortingLayer.GetLayerValueFromName("Player");
+        }
         switch (currAction) {
             case Action.Nothing:
                 Move();
@@ -59,11 +65,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case Action.isEating:
                 anim.SetInteger("Action", 4);
-                gManager.Eating();
+                //gManager.Eating();
+                eatingPanel.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     currAction = Action.Nothing;
+                    eatingPanel.SetActive(false);
                 }
+
                 break;
             case Action.isPhoning:
                 break;
