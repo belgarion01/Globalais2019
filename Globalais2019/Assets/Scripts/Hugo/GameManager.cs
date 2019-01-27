@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
     private int Score;
     public TextMeshProUGUI ScoreTexte;
 
+    private AudioManager aManager;
+
     void Start()
     {
         pController = FindObjectOfType<PlayerController>();
@@ -89,6 +91,8 @@ public class GameManager : MonoBehaviour
         currColocTimer = colocTimer;
         WhereWereYou();
         timeDecoul = 0f;
+
+        aManager.PlaySound("MainMusic");
         //StartCoroutine(Phoning());  
     }
 
@@ -160,6 +164,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Phoning() {
         pController.currAction = PlayerController.Action.isPhoning;
         panel.SetActive(true);
+        aManager.PlaySound("Talk");
             int randQui = Random.Range(1, 3);
             switch (randQui)
             {
