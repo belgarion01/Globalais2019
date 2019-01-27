@@ -20,7 +20,7 @@ public class PIZZA : MonoBehaviour
     {
         if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isEating)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E)&&pController.currAction != PlayerController.Action.isPhoning)
             {
                 pController.currAction = PlayerController.Action.isEating;
             }
