@@ -7,6 +7,8 @@ public class TelephonePizza : MonoBehaviour
     private PizzaManager pManager;
     private GameManager gManager;
 
+    public GameObject TelephonePanel;
+
     public int pizzaPrice = 15;
 
     public Vector2 size;
@@ -24,6 +26,7 @@ public class TelephonePizza : MonoBehaviour
     {
         if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")))
         {
+            TelephonePanel.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (gManager.moneyCount >= pizzaPrice)
@@ -32,6 +35,9 @@ public class TelephonePizza : MonoBehaviour
                     gManager.moneyCount -= pizzaPrice;
                 }
             }
+        }
+        else {
+            TelephonePanel.SetActive(false);
         }
     }
 

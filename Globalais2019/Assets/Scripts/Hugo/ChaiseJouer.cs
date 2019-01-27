@@ -9,6 +9,9 @@ public class ChaiseJouer : MonoBehaviour
     public GameObject chair;
     public GameObject table;
 
+    public GameObject JouerPanelEntrer;
+    public GameObject JouerPanelSortir;
+
     public float radius;
 
     public bool gizmos = false;
@@ -22,21 +25,30 @@ public class ChaiseJouer : MonoBehaviour
     {
         if (Physics2D.OverlapCircle(transform.position, radius, 1<<LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
+            JouerPanelEntrer.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
-            {
-                /*pController.lastPosition = pController.gameObject.transform.position;
-                pController.currAction = PlayerController.Action.isPlaying;*/
-                
+            {               
                 chair.GetComponent<BoxCollider2D>().isTrigger = true;
                 table.GetComponent<BoxCollider2D>().isTrigger = true;
                 pController.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Meuble";
                 pController.FPlaying();
             }
         }
-        if (pController.currAction != PlayerController.Action.isPlaying) {
+        if (pController.currAction != PlayerController.Action.isPlaying)
+        {
             pController.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
             chair.GetComponent<BoxCollider2D>().isTrigger = false;
             table.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else {
+            JouerPanelEntrer.SetActive(false);
+        }
+        if (pController.currAction == PlayerController.Action.isPlaying)
+        {
+            JouerPanelSortir.SetActive(true);
+        }
+        else {
+            JouerPanelSortir.SetActive(false);
         }
     }
 

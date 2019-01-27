@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI Reponse1;
     public TextMeshProUGUI Reponse2;
     public GameObject panel;
+    public Image Photo;
+    public Sprite Maman;
+    public Sprite Manon;
 
     public TextMeshProUGUI Qui2;
     public TextMeshProUGUI Quoi2;
@@ -149,11 +152,13 @@ public class GameManager : MonoBehaviour
             {
                 case 1:
                     Qui.text = "Maman";
+                Photo.sprite = Maman;
                     maman = true;
                     break;
                 case 2:
                     Qui.text = "Manon";
-                    maman = false;
+                Photo.sprite = Manon;
+                maman = false;
                     break;
             }
             randQuoi = Random.Range(1, 4);

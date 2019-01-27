@@ -9,6 +9,9 @@ public class Coca : MonoBehaviour
     public float radius;
     public Vector2 size;
 
+    public GameObject BoirePanelEntrer;
+    public GameObject BoirePanelSortir;
+
     public Vector2 offset;
 
     public bool gizmos = false;
@@ -20,12 +23,23 @@ public class Coca : MonoBehaviour
 
     void Update()
     {
-        if (Physics2D.OverlapBox((Vector2)transform.position+offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
+        if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
+            BoirePanelEntrer.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 pController.currAction = PlayerController.Action.isDrinking;
             }
+        }
+        else {
+            BoirePanelEntrer.SetActive(false);
+        }
+        if (pController.currAction == PlayerController.Action.isDrinking)
+        {
+            BoirePanelSortir.SetActive(true);
+        }
+        else {
+            BoirePanelSortir.SetActive(false);
         }
     }
 

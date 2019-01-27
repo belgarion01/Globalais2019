@@ -12,6 +12,9 @@ public class FenetrePipi : MonoBehaviour
     private bool open = false;
     private bool inRange;
 
+    public GameObject PipiEntrer;
+    public GameObject PipiSortir;
+
     public bool gizmos = false;
 
     void Start()
@@ -24,6 +27,7 @@ public class FenetrePipi : MonoBehaviour
     {
         if (Physics2D.OverlapBox((Vector2)transform.position + offset, size, 0f, 1 << LayerMask.NameToLayer("Player")) && pController.currAction != PlayerController.Action.isPlaying)
         {
+            PipiEntrer.SetActive(true);
             Debug.Log("eee");
             inRange = true;
             if (Input.GetKeyDown(KeyCode.E))
@@ -32,8 +36,16 @@ public class FenetrePipi : MonoBehaviour
                 open = true;
             }
         }
-        if (pController.currAction != PlayerController.Action.isPissing) {
+        else {
+            PipiEntrer.SetActive(false);
+        }
+        if (pController.currAction != PlayerController.Action.isPissing)
+        {
             open = false;
+            PipiSortir.SetActive(false);
+        }
+        else {
+            PipiSortir.SetActive(true);
         }
         anim.SetBool("Open", open);
     }
